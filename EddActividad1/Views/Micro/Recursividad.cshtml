@@ -1,0 +1,33 @@
+@{
+    ViewData["Title"] = "Demostración de Recursividad";
+}
+
+<div class="container mt-4">
+    <h2 class="text-primary mb-3">Prueba de Función Recursiva</h2>
+    <p class="text-muted">Ingresa los tiempos en minutos entre paradas para calcular el tiempo total de la ruta mediante una función recursiva en C#.</p>
+
+    <div class="card shadow-sm mb-4">
+        <div class="card-body">
+            <form asp-action="CalcularRutaRecursiva" method="post">
+                <div class="mb-3">
+                    <label class="form-label">Tiempos entre paradas en minutos (separados por coma):</label>
+                    <input type="text" name="paradasInput" class="form-control" placeholder="8, 12, 5, 15" value="8, 12, 5, 15" required />
+                    <small class="form-text text-muted">Ejemplo: Parada 1 (8m) → Parada 2 (12m) → Parada 3 (5m) → Parada 4 (15m)</small>
+                </div>
+                <button type="submit" class="btn btn-primary">Calcular tiempo total</button>
+            </form>
+        </div>
+    </div>
+
+    @if (ViewBag.Calculado == true)
+    {
+        <div class="alert alert-success shadow-sm">
+            <h4 class="alert-heading">Resultado de la Recursión:</h4>
+            <hr>
+            <p><strong>Arreglo de paradas recibido:</strong> [ @string.Join(", ", ViewBag.TiemposIngresados) ] minutos</p>
+            <p class="fs-5"><strong>Tiempo Total Calculado Recursivamente:</strong> <span class="badge bg-success">@ViewBag.TiempoTotal minutos</span></p>
+        </div>
+    }
+
+    <a asp-action="Index" class="btn btn-secondary mt-2">← Volver al Menú Principal</a>
+</div>

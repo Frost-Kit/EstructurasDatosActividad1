@@ -1,0 +1,123 @@
+@model EddActividad1.Models.Entitys.Micro[]
+
+@{
+    ViewData["Title"] = "Gestión de Micros - Tarija";
+}
+
+<div class="container mt-4">
+    <h2 class="mb-3 text-primary">Control de Flota de Micros (Tarija)</h2>
+
+    <!-- Panel de estadísticas -->
+    <div class="card mb-4 shadow-sm border-secondary">
+        <div class="card-header bg-dark text-white d-flex justify-content-between align-items-center">
+            <h5 class="mb-0">Resumen General de la Flota (Tarija)</h5>
+            <span class="badge bg-light text-primary">Estadísticas globales</span>
+        </div>
+        <div class="card-body">
+            <div class="row text-center">
+                <div class="col-md-4 mb-2">
+                    <div class="p-3 border rounded bg-light">
+                        <small class="text-muted d-block text-uppercase fw-bold">Unidades Registradas</small>
+                        <span class="fs-3 fw-bold text-dark">@Model.Length</span>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-2">
+                    <div class="p-3 border rounded bg-light">
+                        <small class="text-muted d-block text-uppercase fw-bold">Total Pasajeros (Procesado con Arreglo)</small>
+                        <span class="fs-3 fw-bold text-success">@ViewBag.TotalPasajerosFlota</span>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-2">
+                    <div class="p-3 border rounded bg-light">
+                        <small class="text-muted d-block text-uppercase fw-bold">Recaudación Estimada</small>
+                        <span class="fs-3 fw-bold text-primary">BS @(ViewBag.TotalPasajerosFlota * 2.0)</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Formularios interactivos -->
+    <div class="row mb-4">
+        <!-- Agregar Micro -->
+        <div class="col-md-6">
+            <div class="card shadow-sm">
+                <div class="card-header bg-primary text-white">Registrar Nuevo Micro</div>
+                <div class="card-body">
+                    <form asp-controller="Micro" asp-action="AgregarMicro" method="post">
+                        <div class="mb-2">
+                            <label class="form-label">Placa:</label>
+                            <input type="text" name="placa" class="form-control" placeholder="1234-XYZ" required />
+                        </div>
+                        <div class="mb-2">
+                            <label class="form-label">Línea:</label>
+                            <input type="text" name="linea" class="form-control" placeholder="Línea 15" required />
+                        </div>
+                        <div class="row">
+                            <div class="col-6 mb-2">
+                                <label class="form-label">Capacidad:</label>
+                                <input type="number" name="capacidad" class="form-control" value="30" required />
+                            </div>
+                            <div class="col-6 mb-2">
+                                <label class="form-label">Tarifa (BS):</label>
+                                <input type="number" step="0.5" name="tarifa" class="form-control" value="2.0" required />
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-success w-100 mt-2">Agregar a la Flota</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Registrar Pasajeros -->
+        <div class="col-md-6">
+            <div class="card shadow-sm">
+                <div class="card-header bg-secondary text-white">Registrar Subida de Pasajeros</div>
+                <div class="card-body">
+                    <form asp-action="SumarPasajeros" method="post">
+                        <div class="mb-3">
+                            <label class="form-label">Seleccionar Micro:</label>
+                            <select name="placa" class="form-select" required>
+                                @foreach (var m in Model)
+                                {
+                                    <option value="@m.Placa">@m.Linea (@m.Placa)</option>
+                                }
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Pasajeros que subieron:</label>
+                            <input type="number" name="cantidad" class="form-control" value="5" min="1" required />
+                        </div>
+                        <button type="submit" class="btn btn-primary w-100">Sumar Pasajeros</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Tabla de flota -->
+    <h3 class="h4 mb-3">Flota Registrada</h3>
+    <table class="table table-striped table-hover border">
+        <thead class="table-primary">
+            <tr>
+                <th>Placa</th>
+                <th>Línea</th>
+                <th>Capacidad</th>
+                <th>Pasajeros</th>
+                <th>Recaudación (BS)</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var micro in Model)
+            {
+                <tr>
+                    <td>@micro.Placa</td>
+                    <td>@micro.Linea</td>
+                    <td>@micro.Capacidad personas</td>
+                    <td>@micro.PasajerosAtendidos</td>
+                    <td>BS @(micro.PasajerosAtendidos * micro.TarifaPasaje)</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

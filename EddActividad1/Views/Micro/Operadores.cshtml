@@ -1,0 +1,59 @@
+@{
+    ViewData["Title"] = "Demostración de Sobrecarga de Operadores";
+    var micros = ViewBag.Micros as List<EddActividad1.Models.Entitys.Micro>;
+}
+
+<div class="container mt-4">
+    <h2 class="text-primary mb-3">Prueba de Sobrecarga de Operadores</h2>
+    <p class="text-muted">Selecciona dos micros para ejecutar los operadores sobrecargados <code>+</code> y <code>==</code>.</p>
+
+    <div class="card shadow-sm mb-4">
+        <div class="card-body">
+            <form asp-action="CalcularOperadores" method="post" class="row g-3">
+                <div class="col-md-5">
+                    <label class="form-label font-weight-bold">Micro 1:</label>
+                    <select name="placa1" class="form-select" required>
+                        @foreach (var m in micros)
+                        {
+                            <option value="@m.Placa">@m.Linea (@m.Placa) - Capacidad: @m.Capacidad</option>
+                        }
+                    </select>
+                </div>
+                <div class="col-md-5">
+                    <label class="form-label font-weight-bold">Micro 2:</label>
+                    <select name="placa2" class="form-select" required>
+                        @foreach (var m in micros)
+                        {
+                            <option value="@m.Placa">@m.Linea (@m.Placa) - Capacidad: @m.Capacidad</option>
+                        }
+                    </select>
+                </div>
+                <div class="col-md-2 d-flex align-items-end">
+                    <button type="submit" class="btn btn-success w-100">Evaluar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    @if (ViewBag.Calculado == true)
+    {
+        <div class="alert alert-info shadow-sm">
+            <h4 class="alert-heading">Resultados de la Operación:</h4>
+            <hr>
+            <p><strong>Sobrecarga del operador (+):</strong></p>
+            <ul>
+                <li>@ViewBag.Micro1.Linea (@ViewBag.Micro1.PasajerosAtendidos pas.) + @ViewBag.Micro2.Linea (@ViewBag.Micro2.PasajerosAtendidos pas.)</li>
+                <li><strong>Total Combinado:</strong> @ViewBag.SumaPasajeros pasajeros transportados</li>
+            </ul>
+
+            <p><strong>Sobrecarga del operador (==):</strong></p>
+            <ul>
+                <li>Capacidad Micro 1: @ViewBag.Micro1.Capacidad pasajeros</li>
+                <li>Capacidad Micro 2: @ViewBag.Micro2.Capacidad pasajeros</li>
+                <li><strong>¿Tienen la misma capacidad? (m1 == m2):</strong> @(ViewBag.MismaCapacidad ? "SÍ (Verdadero)" : "NO (Falso)")</li>
+            </ul>
+        </div>
+    }
+
+    <a asp-action="Index" class="btn btn-secondary mt-2">← Volver al Menú Principal</a>
+</div>
