@@ -1,4 +1,4 @@
-namespace EddActividad1.Models.Entitys;
+namespace EddActividad1.Models.Entities;
 
 public abstract class UnidadTransporte
 {

@@ -1,6 +1,6 @@
 using EddActividad1.Models.Interfaces;
 
-namespace EddActividad1.Models.Entitys;
+namespace EddActividad1.Models.Entities;
 
 public sealed class Micro : UnidadTransporte, ITransporte
 {

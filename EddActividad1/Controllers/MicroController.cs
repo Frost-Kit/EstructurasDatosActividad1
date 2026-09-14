@@ -1,5 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
-using EddActividad1.Models.Entitys;
+using EddActividad1.Models.Entities;
 
 namespace EddActividad1.Controllers;
 
@@ -25,10 +25,22 @@ public class MicroController : Controller
         }
     }
 
-    [HttpGet]
+    // GET
     public IActionResult Index()
     {
-        return CargarVista();
+        Micro[] flotaArray = CargarFlota();
+
+        return View(flotaArray);
+    }
+
+    private Micro[] CargarFlota()
+    {
+        Micro[] flotaArray = gestor.ObtenerTodos().ToArray();
+        int totalPasajerosFlota = flotaArray.Sum(f => f.PasajerosAtendidos);
+        
+        ViewBag.TotalPasajerosFlota = totalPasajerosFlota;
+
+        return flotaArray;
     }
 
     [HttpPost]
@@ -52,34 +64,10 @@ public class MicroController : Controller
         }
         return RedirectToAction("Index");
     }
-
-    private IActionResult CargarVista()
-    {
-        Micro[] flotaArray = gestor.ObtenerTodos().ToArray();
-        int totalPasajerosFlota = 0;
-
-        for (int i = 0; i < flotaArray.Length; i++)
-        {
-            totalPasajerosFlota += flotaArray[i].PasajerosAtendidos;
-        }
-
-        // Sobrecarga de operadores y cálculo recursivo con los datos actuales
-        int pasajerosM1yM2 = flotaArray.Length >= 2 ? (flotaArray[0] + flotaArray[1]) : 0;
-        bool mismaCapacidad = flotaArray.Length >= 2 ? (flotaArray[0] == flotaArray[1]) : false;
-        
-        int[] tiemposEntreParadas = new int[] { 8, 12, 5, 15 };
-        int tiempoTotalRuta = flotaArray.Length > 0 ? flotaArray[0].CalcularTiempoRutaRecursivo(tiemposEntreParadas) : 0;
-
-        ViewBag.TotalPasajerosFlota = totalPasajerosFlota;
-        ViewBag.SumaM1M2 = pasajerosM1yM2;
-        ViewBag.MismaCapacidad = mismaCapacidad;
-        ViewBag.TiempoTotalRuta = tiempoTotalRuta;
-
-        return View("Index", flotaArray);
-    }
     
     // Vista interactiva para probar la Sobrecarga de Operadores
-    [HttpGet]
+    
+    // GET
     public IActionResult Operadores()
     {
         ViewBag.Micros = gestor.ObtenerTodos();
@@ -108,7 +96,8 @@ public class MicroController : Controller
     }
 
     // Vista interactiva para probar la Recursividad
-    [HttpGet]
+    
+    // GET
     public IActionResult Recursividad()
     {
         return View();
