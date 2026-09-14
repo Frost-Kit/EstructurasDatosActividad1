@@ -17,8 +17,8 @@ Sistema basicon de gestión de flota de micros para Tarija desarrollado en ASP.N
 
 1. **Clonar el repositorio:**
  ```bash
- git clone https://github.com/Frost-Kit/EstructurasDeDatos-Actividad1.git
- cd EstructurasDeDatos-Actividad1
+ git clone [https://github.com/Frost-Kit/EstructurasDeDatos-Actividad1.git](https://github.com/Frost-Kit/EstructurasDatosActividad1.git)
+ cd EstructurasDatosActividad1
  dotnet restore
  dotnet run
  ```
