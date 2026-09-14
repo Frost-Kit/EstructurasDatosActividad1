@@ -8,7 +8,7 @@
     <h2 class="mb-3 text-primary">Control de Flota de Micros (Tarija)</h2>
 
     <!-- Panel de estadísticas -->
-    <section class="card mb-4 shadow-sm border-secondary">
+    <section class="card mb-2 shadow-sm border-secondary ">
         <div class="card-header bg-dark text-white d-flex justify-content-between align-items-center">
             <h5 class="mb-0">Resumen General de la Flota (Tarija)</h5>
             <span class="badge bg-light text-primary">Estadísticas globales</span>
@@ -40,7 +40,7 @@
     <!-- Formularios interactivos -->
     <section class="row mb-4">
         <!-- Agregar Micro -->
-        <article class="col-md-6">
+        <article class="col-md-6 mt-3">
             <div class="card shadow-sm">
                 <div class="card-header bg-primary text-white">Registrar Nuevo Micro</div>
                 <div class="card-body">
@@ -70,7 +70,7 @@
         </article>
 
         <!-- Registrar Pasajeros -->
-        <article class="col-md-6">
+        <article class="col-md-6 mt-3">
             <div class="card shadow-sm">
                 <div class="card-header bg-secondary text-white">Registrar Subida de Pasajeros</div>
                 <div class="card-body">
@@ -103,8 +103,9 @@
                 <th>Placa</th>
                 <th>Línea</th>
                 <th>Capacidad</th>
+                <th>Tarifa (Bs)</th>
                 <th>Pasajeros</th>
-                <th>Recaudación (BS)</th>
+                <th>Recaudación (Bs)</th>
             </tr>
         </thead>
         <tbody>
@@ -114,6 +115,7 @@
                     <td>@micro.Placa</td>
                     <td>@micro.Linea</td>
                     <td>@micro.Capacidad personas</td>
+                    <td style="padding-left: 1vw">@micro.TarifaPasaje</td>
                     <td>@micro.PasajerosAtendidos</td>
                     <td>BS @(micro.PasajerosAtendidos * micro.TarifaPasaje)</td>
                 </tr>
